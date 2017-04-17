@@ -1,0 +1,6 @@
+{{#unless isP}}
+	<button type="button" class="btn-danger" {{action 'Press'}}>Record Catch!</button>
+{{else}}
+	<button type="button" class="btn-danger" {{action 'unPress'}}>Unpress</button>
+{{/unless}}
+{{yield}}

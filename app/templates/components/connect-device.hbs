@@ -1,0 +1,16 @@
+{{!-- Taken from class example --}}
+<div class="row">
+	<div class="col-xs-12">
+		{{#unless tiConnected}}
+			<h4>Connect to Device</h4>
+			<button type="button" class="btn-danger" {{action 'connect'}}>Connect</button>
+		{{else}}
+			<button type="button" class="btn-danger" {{action 'disconnect'}}>Disconnect</button>
+		{{/unless}}
+	</div>
+</div>
+{{#if tiConnected}}
+	{{catch-home}}
+{{/if}}
+
+{{yield}}
