@@ -1,13 +1,39 @@
 {{#unless isP}}
 	<button type="button" class="btn-large" {{action 'Press'}}>Record Catch!</button>
 {{else}}
+	<button  class="btn-info" {{action 'takeAPicture'}}>
+	Take a Picture
+	</button>
+	<br>
+	<b>My Picture</b><br/>
+	<img src={{imgSrc}} height="300" width="300" /><br>
+
 	{{#unless showMap}}
-		<button type="button" class="btn-info" {{action 'getLocation'}}>Show Location</button>
+		<br><button type="button" class="btn-info" {{action 'getLocation'}}>Show Location</button>
 	{{else}}
-		<!-- New York, NY, USA (40.7127837, -74.00594130000002) -->
-		<iframe width="100%" height="450" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/view?key=AIzaSyBcSDSoNxXlc6RrfoqjwuzTKnOl4zxVOFo&center={{lat}},{{lng}}&zoom=20&maptype=satellite"></iframe>
+		<br><iframe width="100%" height="450" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/view?key=AIzaSyBcSDSoNxXlc6RrfoqjwuzTKnOl4zxVOFo&center={{lat}},{{lng}}&zoom=20&maptype=satellite"></iframe>
 		<button type="button" class="btn-info" {{action 'stopLocation'}}>Stop Location</button>
 	{{/unless}}
-	<button type="button" class="btn-warn" {{action 'unPress'}}>Restart Catch Record</button>
+
+	{{#unless showBait}}
+		<br><button type="button" class="btn-info" {{action 'recBait'}}>Record Bait Used</button>
+	{{else}}
+		<br>
+		<input type="radio" name="bait"> Soft Bait<br>
+		<input type="radio" name="bait"> Hard Bait<br>
+		<input type="radio" name="bait"> Swimbait<br>
+		<input type="radio" name="bait"> Jig<br>
+		<input type="radio" name="bait"> Frog<br>
+		<input type="radio" name="bait"> Spinner Bait<br>
+		<input type="radio" name="bait"> Buzz Bait<br>
+		<input type="radio" name="bait"> Umbrella Rig<br>
+		<input type="radio" name="bait"> Other
+		<input type="text" name="obait"><br>
+
+		<br>
+		<button type="button" class="btn-info" {{action 'saveBait'}}>Save!</button>
+	{{/unless}}	
+
+	<br><button type="button" class="btn-warn" {{action 'unPress'}}>Restart Catch Record</button>
 {{/unless}}
 {{yield}}

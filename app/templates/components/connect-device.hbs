@@ -6,7 +6,9 @@
 
 	{{!-- Taken from class example --}}
 	{{#unless tiConnected}}
-		<h4>Connect to Device</h4>
+		<button type="button" class="btn-danger" {{action 'refreshDeviceList'}}>List Devices</button>
+		<ul id="deviceList">
+        </ul>
 		<button type="button" class="btn-danger" {{action 'connect'}}>Connect</button>
 	{{else}}
 		<div id="footer">

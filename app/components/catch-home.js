@@ -1,13 +1,18 @@
+//picture code from https://github.com/theeheng/ember-cli-cordova-example-app
+//gps code from 
 import Ember from 'ember';
 
 export default Ember.Component.extend({
 	isP: false,
 	showMap: false,
+	showBait: false,
+	showCamera: false,
 	lng: 0,
 	lat: 0,
 	alt: 0,
-
+	imgSrc: 'assets/200.jpg',
 	on: true,
+
 	startLogging: function(){
 		//begin logging geolocation data once the component launches
 
@@ -82,6 +87,27 @@ export default Ember.Component.extend({
 	//     });
 	// },
 
+	onPhotoDataSuccess : function (imageData) {
+	//alert('Success.');
+	//alert(imageData);
+
+	this.set('imgSrc',imageData);
+
+	},
+
+	onFail : function (message) {
+	alert('Failed because: ' + message);
+	},
+	capturePhoto : function () {
+	// body...
+
+
+	//alert(navigator.camera);
+
+	navigator.camera.getPicture(this.onPhotoDataSuccess.bind(this), this.onFail , { quality: 50 });
+	},
+
+
 	actions: {
 		Press: function(){
 			var Component = this;
@@ -93,14 +119,33 @@ export default Ember.Component.extend({
 			Component.set('isP', false);
 		},
 
+		recBait: function(){
+			var Component = this;
+			Component.set('showBait', true);
+		},
+
+		saveBait: function(){
+			var Component = this;
+			Component.set('showBait', false);
+			//Save the state of the bait selector
+			//maybe seperate component http://stackoverflow.com/questions/30244040/recording-values-of-radio-buttons-in-ember
+		},
+
 		getLocation: function(){
 			var Component = this;
-			Component.set('showMap', true)
+			Component.set('showMap', true);
 		},
 
 		stopLocation: function(){
 			var Component = this;
-			Component.set('showMap', false)	
-		}
+			Component.set('showMap', false);	
+		},
+
+		takeAPicture: function() {
+			this.capturePhoto();
+			var Component = this;
+			Component.set('showCamera', true);
+			return false;
+		},
 	}
 });
