@@ -1,16 +1,20 @@
-{{!-- Taken from class example --}}
-<div class="row">
-	<div class="col-xs-12">
-		{{#unless tiConnected}}
-			<h4>Connect to Device</h4>
-			<button type="button" class="btn-danger" {{action 'connect'}}>Connect</button>
-		{{else}}
+<body>
+	{{!-- If a device has already been connected, push the disconect button to the bottom, and show the home page for a catch --}}
+	{{#if tiConnected}}
+		{{catch-home}}
+	{{/if}}
+
+	{{!-- Taken from class example --}}
+	{{#unless tiConnected}}
+		<h4>Connect to Device</h4>
+		<button type="button" class="btn-danger" {{action 'connect'}}>Connect</button>
+	{{else}}
+		<div id="footer">
 			<button type="button" class="btn-danger" {{action 'disconnect'}}>Disconnect</button>
-		{{/unless}}
-	</div>
-</div>
-{{#if tiConnected}}
-	{{catch-home}}
-{{/if}}
+		</div>
+	{{/unless}}
+</body>
+
 
 {{yield}}
+

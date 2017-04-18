@@ -1,0 +1,10 @@
+  #footer {
+    position : relative;
+    bottom : 0;
+    height : 40px;
+    margin-top : 40px;
+  }
+
+  #body {
+  	height: 100%;
+  }

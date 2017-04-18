@@ -1,6 +1,13 @@
 {{#unless isP}}
-	<button type="button" class="btn-danger" {{action 'Press'}}>Record Catch!</button>
+	<button type="button" class="btn-large" {{action 'Press'}}>Record Catch!</button>
 {{else}}
-	<button type="button" class="btn-danger" {{action 'unPress'}}>Unpress</button>
+	{{#unless showMap}}
+		<button type="button" class="btn-info" {{action 'getLocation'}}>Show Location</button>
+	{{else}}
+		<!-- New York, NY, USA (40.7127837, -74.00594130000002) -->
+		<iframe width="100%" height="450" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/view?key=AIzaSyBcSDSoNxXlc6RrfoqjwuzTKnOl4zxVOFo&center={{lat}},{{lng}}&zoom=20&maptype=satellite"></iframe>
+		<button type="button" class="btn-info" {{action 'stopLocation'}}>Stop Location</button>
+	{{/unless}}
+	<button type="button" class="btn-warn" {{action 'unPress'}}>Restart Catch Record</button>
 {{/unless}}
 {{yield}}

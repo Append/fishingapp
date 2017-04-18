@@ -13,5 +13,7 @@ export default Ember.Component.extend({
 			var Component = this;
 			Component.set('tiConnected', false);
 		},
+
+		
 	}
 });
