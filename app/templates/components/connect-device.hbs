@@ -1,15 +1,16 @@
 <body>
 	{{!-- If a device has already been connected, push the disconect button to the bottom, and show the home page for a catch --}}
-	{{#if tiConnected}}
-		Connected
-	{{/if}}
 
 	{{!-- unless statements taken from class example --}}
 	{{#unless tiConnected}}
 		<button type="button" class="btn-danger" {{action 'refreshDeviceList'}}>List Devices</button>
 		<ul id="deviceList" class="list-group">
         </ul>
-		<button type="button" class="btn-danger" {{action 'connect'}}>Connect</button>
+        <ul id="detailPage" class="list-group">
+        	{{!-- <div id="barometerData">waiting...</div>
+        	<button id="disconnectButton">Disconnect</button> --}}
+        </ul>
+        <button type="button" class="btn-danger" {{action 'connect'}}>Connect</button>
 	{{else}}
 		<div id="footer">
 			<button type="button" class="btn-danger" {{action 'disconnect'}}>Disconnect</button>

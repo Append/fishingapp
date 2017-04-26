@@ -17,6 +17,7 @@
     <plugin name="cordova-plugin-camera" spec="~2.4.0"/>
     <access origin="*"/>
     <allow-navigation href="*"/>
+    <allow-navigation href="http://169.254.176.35:4200" name="ec-nav"/>
     <allow-intent href="http://*/*"/>
     <allow-intent href="https://*/*"/>
     <allow-intent href="tel:*"/>
