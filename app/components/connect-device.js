@@ -4,7 +4,7 @@ export default Ember.Component.extend({
 
 	tiConnected: false,
 
-
+	//this method handles refreshing and populating the list with new devices
 	onDiscoverDevice: function(device) {
 		var listItem = document.createElement('li'),
 		html = '<b>' + device.name + '</b>' +
@@ -17,14 +17,9 @@ export default Ember.Component.extend({
 		deviceList.appendChild(listItem);
 	},
 
-	onError: function(reason) {
-		alert("ERROR: " + reason); // real apps should use notification.alert
-	},
-
 
 	actions: {
 		connect: function(){
-
 			var Component = this;
 			Component.set('tiConnected', true);
 		},
@@ -33,7 +28,7 @@ export default Ember.Component.extend({
 			var Component = this;
 			Component.set('tiConnected', false);
 		},
-
+		//when first connected scan for devices with the CC2560 tag id, based on code from ble central
 		refreshDeviceList: function() {
 			var Component = this;
 			deviceList.innerHTML = ''; //dump old list

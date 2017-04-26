@@ -1,5 +1,3 @@
-//picture code from https://github.com/theeheng/ember-cli-cordova-example-app
-//gps code from 
 import Ember from 'ember';
 
 export default Ember.Component.extend({
@@ -21,6 +19,7 @@ export default Ember.Component.extend({
 
 	}.on('init'),
 
+	//gps code from class mate at https://github.com/MLHale/CYBR8480/blob/master/modules/hybrid-app-tutorial-part2.md
 	computeGPS: function(component){
 		Ember.run.later(function(){
 		//wrapper to preserve binding satistfaction
@@ -87,6 +86,7 @@ export default Ember.Component.extend({
 	//     });
 	// },
 
+	//picture code from https://github.com/theeheng/ember-cli-cordova-example-app
 	onPhotoDataSuccess : function (imageData) {
 	//alert('Success.');
 	//alert(imageData);
