@@ -65,7 +65,7 @@ export default Ember.Component.extend({
 	//on second click
 	//found at https://github.com/don/cordova-plugin-ble-central/blob/master/examples/sensortag_cc2650/www/js/index.js#L63
 	setup: function(deviceId,newThis){
-        ble.connect(deviceId, newThis.get('onConnect')(deviceId), function(reason){newThis.get('onError')(reason)});
+        ble.connect(deviceId, newThis.get('onConnect')(deviceId), function(reason){this.get('onError')(reason)});
 	},
 
 	onError: function(reason) {
@@ -75,7 +75,7 @@ export default Ember.Component.extend({
 	actions: {
 		connect: function(){
 			var Component = this;
-			//Component.set('tiConnected', true);
+			Component.set('tiConnected', true);
 			//alert(this.get('deviceId'));
 			this.get('setup')(this.get('deviceId'),Component);
 		},

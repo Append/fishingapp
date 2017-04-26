@@ -1,23 +1,18 @@
-<body>
-	{{!-- If a device has already been connected, push the disconect button to the bottom, and show the home page for a catch --}}
+{{!-- If a device has already been connected, push the disconect button to the bottom, and show the home page for a catch --}}
 
-	{{!-- unless statements taken from class example --}}
-	{{#unless tiConnected}}
-		<button type="button" class="btn-danger" {{action 'refreshDeviceList'}}>List Devices</button>
-		<ul id="deviceList" class="list-group">
-        </ul>
-        <ul id="detailPage" class="list-group">
-        	{{!-- <div id="barometerData">waiting...</div>
-        	<button id="disconnectButton">Disconnect</button> --}}
-        </ul>
-        <button type="button" class="btn-danger" {{action 'connect'}}>Connect</button>
-	{{else}}
-		<div id="footer">
-			<button type="button" class="btn-danger" {{action 'disconnect'}}>Disconnect</button>
-		</div>
-	{{/unless}}
-</body>
-
+{{!-- unless statements taken from class example --}}
+{{#unless tiConnected}}
+	<button type="button" class="btn-danger" {{action 'refreshDeviceList'}}>List Devices</button>
+	<ul id="deviceList" class="list-group">
+    </ul>
+    <ul id="detailPage" class="list-group">
+    	{{!-- <div id="barometerData">waiting...</div>
+    	<button id="disconnectButton">Disconnect</button> --}}
+    </ul>
+    <button type="button" class="btn-danger" {{action 'connect'}}>Connect</button>
+{{else}}
+	<button type="button" class="btn-danger" {{action 'disconnect'}}>Disconnect</button>
+{{/unless}}
 
 {{yield}}
 
