@@ -5,7 +5,7 @@ Fishing is an activity that humans have worked at improving since prehistory.  W
 
 ### Objectives
 1. Building an app that is able to collect data from the phone itself and from other sensors
-    - The hybrid app will help users by allowing the application to use the built in functionality of their modbile device and external sensors that create a bigger picture of data
+    - The hybrid app will help users by allowing the application to use the built in functionality of their mobile device and external sensors that create a bigger picture of data
 2. Logging weather and environment data for analysis
     - Logging weather and environment data will help users understand the intracacies of what the fish are doing when the weather or pressure are a certain way
 3. Allow users to record specific catch events in the app
@@ -31,14 +31,30 @@ Fishing is an activity that humans have worked at improving since prehistory.  W
 
 ### User Stories
 
-* As a **Professional Bass Angler**, I want to **see my past catches on this lake** so I can **pick the best lure for this competition**.
-* As a **Casual Angler**, I want to **check historic weather data** so I can **decide what and where to fish today**.
-* As a **Fishing Guide**, I want to **see the current lake environment** so I can **pick the best place to fish for clients**.
+As a **Professional Bass Angler**, I want to **see my past catches on this lake** so I can **pick the best lure for this competition**.
+#### Acceptance
+  - The angler will be shown past catche locations and pictures.
+  - The angler can see what lures were used in past catches
+  - The user will get a recomendation based on most common lures
+
+As a **Casual Angler**, I want to **check historic weather data** so I can **decide what and where to fish today**.
+#### Acceptance
+  - The angler will be able to look at past catches and the weather data associated.
+  - The angler can see current weather data.
+  - The angler will be able to decide what is the best approach for fishing now.
+
+As a **Fishing Guide**, I want to **see the current lake environment** so I can **pick the best place to fish for clients**.
+#### Acceptance
+  - The angler will see current lake environment data, like pressure and temperature.
+  - The angler can see what weather causes certain locations to produce more fish.
+  - The angler will be able to decide what the best areas to fish in certain weather are.
 
 ### Misuser Stories
 
 * As a **Evil Professional Angler**, I want to misuse **historic catch data of my competition** so I can **steal their lake knowledge**.
+  - Adequate access controls to stop anglers from seeing other anglers catch records.
 * As a **Competitor Guide**, I want to misuse **lake environment sensors** so I can **denial of service my competitors data to steal their customers**.
+  - The connection between the app and the SensorTag needs to be adequately secured.
 
-###Component Diagram
+### Component Diagram
 ![alt text](https://github.com/Append/fishingapp/blob/master/Documentation/pictures/cdiagram.PNG "Component Diagram")
