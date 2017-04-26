@@ -7,12 +7,13 @@ export default Ember.Component.extend({
 
 	onDiscoverDevice: function(device) {
 		var listItem = document.createElement('li'),
-		html = '<b>' + device.name + '</b><br/>' +
-		'RSSI: ' + device.rssi + '&nbsp;|&nbsp;' +
+		html = '<b>' + device.name + '</b>' +
+		'&nbsp;|&nbsp;' +
 		device.id;
 
-		listItem.dataset.deviceId = device.id;  // TODO
+		listItem.dataset.deviceId = device.id; 
 		listItem.innerHTML = html;
+		listItem.className = "list-group-item";
 		deviceList.appendChild(listItem);
 	},
 
@@ -34,20 +35,9 @@ export default Ember.Component.extend({
 		},
 
 		refreshDeviceList: function() {
-			ble.scan([], 5, function(device) {
-		var listItem = document.createElement('li'),
-		html = '<b>' + device.name + '</b><br/>' +
-		'RSSI: ' + device.rssi + '&nbsp;|&nbsp;' +
-		device.id;
-
-		listItem.dataset.deviceId = device.id;  // TODO
-		listItem.innerHTML = html;
-		deviceList.appendChild(listItem);
-	});
-
-			//deviceList.innerHTML = ''; // empties the list
-			// scan for CC2560 SensorTags
-			//ble.scan(['AA80'], 5, this.onDiscoverDevice());
+			var Component = this;
+			deviceList.innerHTML = ''; //dump old list
+			ble.scan(['AA80'], 5, function(device){Component.get('onDiscoverDevice')(device)}); // scan for CC2560 SensorTags
 		},
 
 	}

@@ -1,13 +1,13 @@
 <body>
 	{{!-- If a device has already been connected, push the disconect button to the bottom, and show the home page for a catch --}}
 	{{#if tiConnected}}
-		{{catch-home}}
+		Connected
 	{{/if}}
 
 	{{!-- Taken from class example --}}
 	{{#unless tiConnected}}
 		<button type="button" class="btn-danger" {{action 'refreshDeviceList'}}>List Devices</button>
-		<ul id="deviceList">
+		<ul id="deviceList" class="list-group">
         </ul>
 		<button type="button" class="btn-danger" {{action 'connect'}}>Connect</button>
 	{{else}}
