@@ -18,7 +18,7 @@ Fishing is an activity that humans have worked at improving since prehistory.  W
     -  By taking in data from all the users, the FishBright application will be able to see trends across all anglers and produce tips for the benefit of the whole 
     
 ### Gantt Chart
-![alt text](https://github.com/Append/CYBR8480_Project/blob/master/pictures/Gantt.PNG "Gantt Chart")
+![alt text](https://github.com/Append/fishingapp/blob/master/Documentation/pictures/Gantt.PNG "Gantt Chart")
 
 ### Risk List
 |Risk name (value)  | Impact     | Likelihood | Description | Mitigation |
@@ -41,4 +41,4 @@ Fishing is an activity that humans have worked at improving since prehistory.  W
 * As a **Competitor Guide**, I want to misuse **lake environment sensors** so I can **denial of service my competitors data to steal their customers**.
 
 ###Component Diagram
-![alt text](https://github.com/Append/CYBR8480_Project/blob/master/pictures/cdiagram.PNG "Component Diagram")
+![alt text](https://github.com/Append/fishingapp/blob/master/Documentation/pictures/cdiagram.PNG "Component Diagram")
