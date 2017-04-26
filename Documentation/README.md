@@ -31,17 +31,19 @@ Fishing is an activity that humans have worked at improving since prehistory.  W
 
 ### User Stories
 
-* As a **Professional Bass Angler**, I want to **see my past catches on this lake** so I can **pick the best lure for this competition**.
+As a **Professional Bass Angler**, I want to **see my past catches on this lake** so I can **pick the best lure for this competition**.
 #### Acceptance
   - The angler will be shown past catche locations and pictures.
   - The angler can see what lures were used in past catches
   - The user will get a recomendation based on most common lures
-* As a **Casual Angler**, I want to **check historic weather data** so I can **decide what and where to fish today**.
+
+As a **Casual Angler**, I want to **check historic weather data** so I can **decide what and where to fish today**.
 #### Acceptance
   - The angler will be able to look at past catches and the weather data associated.
   - The angler can see current weather data.
   - The angler will be able to decide what is the best approach for fishing now.
-* As a **Fishing Guide**, I want to **see the current lake environment** so I can **pick the best place to fish for clients**.
+
+As a **Fishing Guide**, I want to **see the current lake environment** so I can **pick the best place to fish for clients**.
 #### Acceptance
   - The angler will see current lake environment data, like pressure and temperature.
   - The angler can see what weather causes certain locations to produce more fish.
