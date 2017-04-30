@@ -8,6 +8,7 @@ export default Ember.Component.extend({
 	lng: 0,
 	lat: 0,
 	alt: 0,
+	zoom: 4,
 	imgSrc: 'assets/200.jpg',
 	on: true,
 
@@ -28,7 +29,7 @@ export default Ember.Component.extend({
 			navigator.geolocation.getCurrentPosition(function (position) {//success callback
 			//console.log('acceleration setvars called');
 			component.set('lng', position.coords.longitude);
-			console.log(position.coords);
+			//console.log(position.coords);
 			component.set('lat', position.coords.latitude);
 			component.set('alt', position.coords.altitude);
 

@@ -27,6 +27,10 @@ export default Ember.Component.extend({
 		deviceList.appendChild(listItem);
 	},
 
+	onError: function(reason) {
+        alert("ERROR: " + reason); // real apps should use notification.alert
+    },
+
 	sensorBarometerConvert: function(data){
         return (data / 100);
     },
@@ -40,22 +44,26 @@ export default Ember.Component.extend({
                     "Pressure <br/>" +
                     this.get('sensorBarometerConvert')( a[3] | (a[4] << 8) | (a[5] << 16)) + "hPa <br/>" ;
 
-        //barometerData.innerHTML = message;
-        alert("1");
+        barometerData.innerHTML = message;
+        //alert("1");
     },
 
-	onConnect: function(deviceId) {
+    onDisconnect: function(){
+    	ble.disconnect(this.deviceId, function(){alert("Succesful disconnect");}, function(reason){alert("ERROR: " + reason);});
+    },
+
+	onConnect: function(deviceId, newThis) {
 		// Subscribe to button service
 		// ble.startNotification(deviceId, button.service, button.data, app.onButtonData, app.onError);
 
 		//Subscribe to barometer service
-		ble.startNotification(deviceId, "F000AA40-0451-4000-B000-000000000000", "F000AA41-0451-4000-B000-000000000000", function(data){this.get('onBarometerData')(data)}, function(reason){this.get('onError')(reason)});
+		ble.startNotification(deviceId, "F000AA40-0451-4000-B000-000000000000", "F000AA41-0451-4000-B000-000000000000", function(data){newThis.get('onBarometerData')(data)}, function(reason){alert("ERROR: " + reason);});
 
 		//Turn on barometer
 		var barometerConfig = new Uint8Array(1);
 		barometerConfig[0] = 0x01;
 		ble.write(deviceId, "F000AA40-0451-4000-B000-000000000000", "F000AA42-0451-4000-B000-000000000000", barometerConfig.buffer,
-		function() { alert("Started barometer."); }, function(reason){this.get('onError')(reason)});
+		function() { alert("Started barometer."); }, function(reason){alert("ERROR: " + reason);});
 
 		//Associate the deviceID with the disconnect button
 		//disconnectButton.dataset.deviceId = deviceId;
@@ -65,12 +73,9 @@ export default Ember.Component.extend({
 	//on second click
 	//found at https://github.com/don/cordova-plugin-ble-central/blob/master/examples/sensortag_cc2650/www/js/index.js#L63
 	setup: function(deviceId,newThis){
-        ble.connect(deviceId, newThis.get('onConnect')(deviceId), function(reason){this.get('onError')(reason)});
+        ble.connect(deviceId, newThis.get('onConnect')(deviceId, newThis), function(reason){alert("ERROR: " + reason);});
 	},
 
-	onError: function(reason) {
-        alert("ERROR: " + reason); // real apps should use notification.alert
-    },
 
 	actions: {
 		connect: function(){
@@ -82,6 +87,7 @@ export default Ember.Component.extend({
 
 		disconnect: function(){
 			var Component = this;
+			this.get('onDisconnect');
 			Component.set('tiConnected', false);
 		},
 		//when first connected scan for devices with the CC2560 tag id, based on code from ble central
