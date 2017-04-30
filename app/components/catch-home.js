@@ -36,11 +36,12 @@ export default Ember.Component.extend({
 
 		}, function (error) {//error callback	
 
-		console.log(error);
+		//console.log(error);
 		});
 	}
 	catch(err){
-	console.log('error: '+err);
+	//console.log('error: '+err);
+	alert('error: '+err);
 	}
 	if(component.get('on')){
 		//keep running
