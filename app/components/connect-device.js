@@ -13,6 +13,8 @@ export default Ember.Component.extend({
 	tiConnected: false,
 	clicks: 0,
 	deviceId: "24:71:89:C0:B0:84",
+	temp: 0,
+	press: 0,
 
 	//this method handles refreshing and populating the list with new devices
 	onDiscoverDevice: function(device) {
@@ -39,8 +41,9 @@ export default Ember.Component.extend({
          var a = new Uint8Array(data);
          //0-2 Temp
          //3-5 Pressure
+         newThis.set('temp',newThis.get('sensorBarometerConvert')( a[0] | (a[1] << 8) | (a[2] << 16)));
          message =  "Temperature <br/>" +
-                    newThis.get('sensorBarometerConvert')( a[0] | (a[1] << 8) | (a[2] << 16)) + "°C <br/>" +
+                    newThis.get('temp') + "°C <br/>" +
                     "Pressure <br/>" +
                     newThis.get('sensorBarometerConvert')( a[3] | (a[4] << 8) | (a[5] << 16)) + "hPa <br/>" ;
 
