@@ -5,6 +5,7 @@ export default Ember.Component.extend({
 	showMap: false,
 	showBait: false,
 	showCamera: false,
+	first: false,
 	lng: 0,
 	lat: 0,
 	alt: 0,
@@ -136,6 +137,10 @@ export default Ember.Component.extend({
 		getLocation: function(){
 			var Component = this;
 			Component.set('showMap', true);
+		},
+		next: function(){
+			var Component = this;
+			Component.set('first', false);	
 		},
 
 		stopLocation: function(){

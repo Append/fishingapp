@@ -1,40 +1,45 @@
 {{#unless isP}}
-	<button type="button" class="btn-large" {{action 'Press'}}>Record Catch!</button>
+	<div>
+		<button type="button" class="btn-large" {{action 'Press'}}>Record Catch!</button>
+	</div>
 {{else}}
-	<button  class="btn-info" {{action 'takeAPicture'}}>
-	Take a Picture
-	</button>
-	<br>
-	<b>My Picture</b><br/>
-	<img src={{imgSrc}} height="300" width="300" /><br>
-
-	{{#unless showMap}}
-		<br><button type="button" class="btn-info" {{action 'getLocation'}}>Show Location</button>
-	{{else}}
-		<br><iframe width="100%" height="450" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/view?key=AIzaSyBcSDSoNxXlc6RrfoqjwuzTKnOl4zxVOFo&center={{lat}},{{lng}}&zoom=20&maptype=satellite"></iframe>
-		{{!-- {{g-maps name="my-map" lat=lat lng=lng zoom=zoom}} --}}
-		<button type="button" class="btn-info" {{action 'stopLocation'}}>Stop Location</button>
-	{{/unless}}
-
-	{{#unless showBait}}
-		<br><button type="button" class="btn-info" {{action 'recBait'}}>Record Bait Used</button>
-	{{else}}
+	<div>
+		<button  class="btn-info" {{action 'takeAPicture'}}>Take a Picture</button>
 		<br>
-		<input type="radio" name="bait"> Soft Bait<br>
-		<input type="radio" name="bait"> Hard Bait<br>
-		<input type="radio" name="bait"> Swimbait<br>
-		<input type="radio" name="bait"> Jig<br>
-		<input type="radio" name="bait"> Frog<br>
-		<input type="radio" name="bait"> Spinner Bait<br>
-		<input type="radio" name="bait"> Buzz Bait<br>
-		<input type="radio" name="bait"> Umbrella Rig<br>
-		<input type="radio" name="bait"> Other
-		<input type="text" name="obait"><br>
+		<b>My Picture</b><br/>
+		<img src={{imgSrc}} height="300" width="300" /><br>
+{{!-- 		<button type="button" class="btn-info" {{action 'next'}}>next</button>
+ --}}	</div>
+	<div>
+		{{#unless showMap}}
+			<br><button type="button" class="btn-info" {{action 'getLocation'}}>Show Location</button>
+		{{else}}
+			<br><iframe width="100%" height="450" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/view?key=AIzaSyBcSDSoNxXlc6RrfoqjwuzTKnOl4zxVOFo&center={{lat}},{{lng}}&zoom=20&maptype=satellite"></iframe>
+			{{!-- {{g-maps name="my-map" lat=lat lng=lng zoom=zoom}} --}}
+			<button type="button" class="btn-info" {{action 'stopLocation'}}>Stop Location</button>
+		{{/unless}}
+	</div>
 
-		<br>
-		<button type="button" class="btn-info" {{action 'saveBait'}}>Save!</button>
-	{{/unless}}	
-
+	<div>
+		{{#unless showBait}}
+			<br><button type="button" class="btn-info" {{action 'recBait'}}>Record Bait Used</button>
+		{{else}}
+			<select class="form-control">
+				<option value="one">Soft Bait</option>
+				<option value="two">Hard Bait</option>
+				<option value="three">Swim Bait</option>
+				<option value="four">Jig</option>
+				<option value="five">Frog</option>
+				<option value="six">Spinner Bait</option>
+				<option value="seven">Buzz Bait</option>
+				<option value="eight">Umbrella Rig</option>
+				<option value="nine">Live Bait</option>
+				<option value="ten">Other</option>
+			</select>
+			<br>
+			<button type="button" class="btn-info" {{action 'saveBait'}}>Save!</button>
+		{{/unless}}
+	</div>	
 	<br><button type="button" class="btn-warn" {{action 'unPress'}}>Restart Catch Record</button>
 {{/unless}}
 {{yield}}
