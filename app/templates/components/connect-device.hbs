@@ -9,10 +9,15 @@
     
     <button type="button" class="btn-danger" {{action 'connect' '24:71:89:C0:B0:84'}}>Connect</button>
 {{else}}
-	{{!-- <ul id="detailPage" class="list-group">
+	<ul id="detailPage" class="list-group">
     	<div id="barometerData">...</div>
-    </ul> --}}
+    </ul>
     {{!-- <button type="button" class="btn-warn" {{action 'check'}}>Device Status</button> --}}
+    <h3>Barometric Pressure</h3>
+    {{time-series-chart lineData=baroHistory}}
+
+    <h3>Temperature</h3>
+    {{time-series-chart lineData=tempHistory}}
 
 	<button type="button" class="btn-info" {{action 'disconnect'}}>Disconnect</button>
 {{/unless}}

@@ -1,6 +1,6 @@
 {{#unless isP}}
 	<div>
-		<button type="button" class="btn-large" {{action 'Press'}}>Record Catch!</button>
+		<br><button type="button" class="btn-large" {{action 'Press'}}>Record Catch!</button>
 	</div>
 {{else}}
 	<div>
@@ -9,7 +9,7 @@
 		<b>My Picture</b><br/>
 		<img src={{imgSrc}} height="300" width="300" /><br>
 {{!-- 		<button type="button" class="btn-info" {{action 'next'}}>next</button>
- --}}	</div>
+ --}}</div>
 	<div>
 		{{#unless showMap}}
 			<br><button type="button" class="btn-info" {{action 'getLocation'}}>Show Location</button>
@@ -21,24 +21,20 @@
 	</div>
 
 	<div>
-		{{#unless showBait}}
-			<br><button type="button" class="btn-info" {{action 'recBait'}}>Record Bait Used</button>
-		{{else}}
-			<select class="form-control">
-				<option value="one">Soft Bait</option>
-				<option value="two">Hard Bait</option>
-				<option value="three">Swim Bait</option>
-				<option value="four">Jig</option>
-				<option value="five">Frog</option>
-				<option value="six">Spinner Bait</option>
-				<option value="seven">Buzz Bait</option>
-				<option value="eight">Umbrella Rig</option>
-				<option value="nine">Live Bait</option>
-				<option value="ten">Other</option>
-			</select>
-			<br>
-			<button type="button" class="btn-info" {{action 'saveBait'}}>Save!</button>
-		{{/unless}}
+		<br><button type="button" class="btn-info" {{action 'recBait'}}>Record Bait Used</button>
+		<select class="form-control">
+			<option value="one">Soft Bait</option>
+			<option value="two">Hard Bait</option>
+			<option value="three">Swim Bait</option>
+			<option value="four">Jig</option>
+			<option value="five">Frog</option>
+			<option value="six">Spinner Bait</option>
+			<option value="seven">Buzz Bait</option>
+			<option value="eight">Umbrella Rig</option>
+			<option value="nine">Live Bait</option>
+			<option value="ten">Other</option>
+		</select>
+		<br>
 	</div>	
 	<br><button type="button" class="btn-warn" {{action 'unPress'}}>Restart Catch Record</button>
 {{/unless}}

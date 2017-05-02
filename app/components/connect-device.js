@@ -7,6 +7,8 @@ export default Ember.Component.extend({
 	deviceId: "24:71:89:C0:B0:84",
 	temp: 0,
 	press: 0,
+	baroHistory: [],
+	tempHistory: [],
 
 	startDatabase: function(){
 		const dbName = "sensorData";
@@ -82,6 +84,24 @@ export default Ember.Component.extend({
                      + "hPa <br/>" ;
 
         barometerData.innerHTML = message;
+        //update history, maintain 50 points max
+		var history=newThis.get('baroHistory');
+		if(history.length === 50){
+			history.shiftObject();//shift an x off
+		}
+        var t = Date.now();
+        var newXPoint = {time: t, label: 'x', value: newThis.get('press')};
+        history.addObjects([newXPoint]);
+
+        //update history, maintain 50 points max
+		var history=newThis.get('tempHistory');
+		if(history.length === 50){
+			history.shiftObject();//shift an x off
+		}
+        var t = Date.now();
+        var newXPoint = {time: t, label: 'x', value: newThis.get('temp')};
+        history.addObjects([newXPoint]);
+
     },
 
     //recommended in ble central to convert the data from the sensor, add F conversion

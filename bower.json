@@ -1,6 +1,8 @@
 {
   "name": "fishingapp",
   "dependencies": {
-    "gmaps-for-apps": "^0.5.15"
+    "gmaps-for-apps": "^0.5.15",
+    "d3": "~3.5.3",
+    "lodash": "~3.10.0"
   }
 }
