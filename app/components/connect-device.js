@@ -3,6 +3,7 @@ import Ember from 'ember';
 export default Ember.Component.extend({
 
 	tiConnected: false,
+	testing: false,
 	clicks: 0,
 	deviceId: "24:71:89:C0:B0:84",
 	temp: 0,
@@ -10,43 +11,7 @@ export default Ember.Component.extend({
 	baroHistory: [],
 	tempHistory: [],
 
-	startDatabase: function(){
-		const dbName = "sensorData";
 
-		var request = indexedDB.open(dbName, 2);
-
-		request.onerror = function(event) {
-			// Handle errors.
-			alert('Error in startDB');
-		};
-		request.onupgradeneeded = function(event) {
-			alert('creating DB');
-			var db = event.target.result;
-
-			// Create an objectStore to hold information about our customers. We're
-			// going to use "ssn" as our key path because it's guaranteed to be
-			// unique - or at least that's what I was told during the kickoff meeting.
-			var objectStore = db.createObjectStore("customers", { keyPath: "ssn" });
-
-			// Create an index to search customers by name. We may have duplicates
-			// so we can't use a unique index.
-			objectStore.createIndex("name", "name", { unique: false });
-
-			// Create an index to search customers by email. We want to ensure that
-			// no two customers have the same email, so use a unique index.
-			objectStore.createIndex("email", "email", { unique: true });
-
-			// Use transaction oncomplete to make sure the objectStore creation is 
-			// finished before adding data into it.
-			objectStore.transaction.oncomplete = function(event) {
-			// Store values in the newly created objectStore.
-			var customerObjectStore = db.transaction("customers", "readwrite").objectStore("customers");
-			for (var i in customerData) {
-				customerObjectStore.add(customerData[i]);
-			}
-			};
-		};
-	}.on('init'),
 	//this method handles refreshing and populating the list with new devices
 	onDiscoverDevice: function(device) {
 		var listItem = document.createElement('li'),
@@ -123,18 +88,30 @@ export default Ember.Component.extend({
 
     //store the sensor data
     storeSensor: function(component){
-    	console.log('yip');
+    	var t = Date.now();
+    	if(component.get('press') !== 0){
+    		var newXPoint = {time: t, label: 'x', value: component.get('press')};
+    	
+			localforage.length().then(function(numberOfKeys) {
+				// Outputs the length of the database.
+				//console.log(numberOfKeys);
+				var formattedNumber = ("0000" + numberOfKeys).slice(-5);
+				localforage.setItem(formattedNumber, newXPoint, function(){});
+			}).catch(function(err) {
+				// This code runs if there were any errors
+				console.log(err);
+			});
+		}
     }, 
 
     //Ever 5 seconds record the state of the sensor, uses recursion and the ember run later function
     recordLoop: function(component){
-    	var component = this;
-    	if(component.get('tiConnected') === true){
+    	if(component.get('tiConnected') == true){
     		component.get('storeSensor')(component);
     	}
     	//run every 30 seconds
-    	Ember.run.later(component, function(){this.recordLoop(component)},30000);
-    }.on('init'),
+    	Ember.run.later(component, function(){component.get('recordLoop')(component)},5000);
+    },
 
     onButtonData: function(data) {
 		// button bitmask
@@ -193,6 +170,15 @@ export default Ember.Component.extend({
         ble.connect(deviceId, function(){Ember.run.later(newThis.get('onConnect')(deviceId, newThis),100);}, function(reason){alert("setup ERROR: " + reason);});  
 	},
 
+	sDB: function(){
+		var newThis = this;
+		localforage.config({
+		name        : 'FishBright',
+		storeName   : 'sensor', // Should be alphanumeric, with underscores.
+		description : 'db for sensor stuff'
+		});
+		this.get('recordLoop')(this);
+	}.on('init'),
 
 	actions: {
 		//connect to device

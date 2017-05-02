@@ -31,14 +31,6 @@ module.exports = function(environment) {
     // ENV.APP.LOG_VIEW_LOOKUPS = true;
   }
 
-  ENV.contentSecurityPolicy = {
-  'default-src': "'none'",
-  'script-src': "'self' 'unsafe-eval' *.googleapis.com maps.gstatic.com",
-  'font-src': "'self' fonts.gstatic.com",
-  'connect-src': "'self' maps.gstatic.com",
-  'img-src': "'self' *.googleapis.com maps.gstatic.com csi.gstatic.com",
-  'style-src': "'self' 'unsafe-inline' fonts.googleapis.com maps.gstatic.com"
-  };
 
   if (environment === 'test') {
     // Testem prefers this...

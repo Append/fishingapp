@@ -36,8 +36,7 @@ export default Ember.Component.extend({
 
 
 		}, function (error) {//error callback	
-
-		//console.log(error);
+			console.log(error);
 		});
 	}
 	catch(err){

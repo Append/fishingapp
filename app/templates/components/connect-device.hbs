@@ -13,11 +13,13 @@
     	<div id="barometerData">...</div>
     </ul>
     {{!-- <button type="button" class="btn-warn" {{action 'check'}}>Device Status</button> --}}
-    <h3>Barometric Pressure</h3>
-    {{time-series-chart lineData=baroHistory}}
+    {{#if testing}}
+        <h3>Barometric Pressure</h3>
+        {{time-series-chart lineData=baroHistory}}
 
-    <h3>Temperature</h3>
-    {{time-series-chart lineData=tempHistory}}
+        <h3>Temperature</h3>
+        {{time-series-chart lineData=tempHistory}}
+    {{/if}}
 
 	<button type="button" class="btn-info" {{action 'disconnect'}}>Disconnect</button>
 {{/unless}}

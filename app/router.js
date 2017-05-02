@@ -9,6 +9,7 @@ const Router = Ember.Router.extend({
 Router.map(function() {
   this.route('home');
   this.route('catchome');
+  this.route('graphs');
 });
 
 export default Router;
