@@ -12,12 +12,25 @@ export default Ember.Component.extend({
 	zoom: 4,
 	imgSrc: 'assets/200.jpg',
 	on: true,
+	baits: ["Soft Bait", "Hard Bait", "Swim Bait", "Jig", "Frog", "Spinner Bait", "Buzz Bait", "Umbrella Rig", "Live Bait", "Other"],
+	curBait: "Soft Bait",
+	myDb: null,
+
+	sDB: function(){
+
+	}.on('init'),
 
 	startLogging: function(){
 		//begin logging geolocation data once the component launches
 
 		var component = this;
 		this.computeGPS(component);
+
+		// component.set("myDb", localforage.config({
+		// 	name        : 'FishBright',
+		// 	storeName   : 'catches', // Should be alphanumeric, with underscores.
+		// 	description : 'db for catches'
+		// }););
 
 	}.on('init'),
 
@@ -38,18 +51,20 @@ export default Ember.Component.extend({
 		}, function (error) {//error callback	
 			console.log(error);
 		});
-	}
-	catch(err){
-	//console.log('error: '+err);
-	alert('error: '+err);
-	}
-	if(component.get('on')){
-		//keep running
-		component.computeGPS(component); //recurse
-	}
+		}
+		catch(err){
+			//console.log('error: '+err);
+			alert('error: '+err);
+		}
+		if(component.get('on')){
+			//keep running
+			component.computeGPS(component); //recurse
+		}
 
-	}, 10000);//run ever 10000ms
+		}, 10000);//run ever 10000ms
 	},
+
+
 
 	// getWeather: function(latitude, longitude) {
 
@@ -90,23 +105,35 @@ export default Ember.Component.extend({
 
 	//picture code from https://github.com/theeheng/ember-cli-cordova-example-app
 	onPhotoDataSuccess : function (imageData) {
-	//alert('Success.');
-	//alert(imageData);
+		//alert('Success.');
+		//alert(imageData);
 
-	this.set('imgSrc',imageData);
+		this.set('imgSrc',imageData);
 
 	},
 
 	onFail : function (message) {
-	alert('Failed because: ' + message);
+		alert('Failed because: ' + message);
 	},
+
 	capturePhoto : function () {
-	// body...
+		//alert(navigator.camera);
+		navigator.camera.getPicture(this.onPhotoDataSuccess.bind(this), this.onFail , { quality: 50 });
+	},
 
-
-	//alert(navigator.camera);
-
-	navigator.camera.getPicture(this.onPhotoDataSuccess.bind(this), this.onFail , { quality: 50 });
+	recordCatch: function(component) {
+		// //pull most recent catch from catches database
+		// //add json object onto back of value
+		// var catchData = {"lat": component.get('lat'), "lng": component.get('lng'), "imgSrc": component.get('imgSrc'), "curBait": component.get('curBait') };
+		// component.get('myDb').length().then(function(numberOfKeys) {
+		// 		// Outputs the length of the database.
+		// 		//console.log(numberOfKeys);
+		// 	var formattedNumber = ("0000" + numberOfKeys).slice(-5);
+		// 	component.get('myDb').setItem(formattedNumber, catchData, function(){});
+		// }).catch(function(err) {
+		// 	// This code runs if there were any errors
+		// 	console.log(err);
+		// });
 	},
 
 
@@ -137,6 +164,7 @@ export default Ember.Component.extend({
 			var Component = this;
 			Component.set('showMap', true);
 		},
+
 		next: function(){
 			var Component = this;
 			Component.set('first', false);	
@@ -147,11 +175,21 @@ export default Ember.Component.extend({
 			Component.set('showMap', false);	
 		},
 
+		saveCatch: function(){
+			var component = this;
+			component.set('isP', false);
+			component.get('recordCatch')(component);	
+		},
+
 		takeAPicture: function() {
 			this.capturePhoto();
 			var Component = this;
 			Component.set('showCamera', true);
 			return false;
+		},
+
+		chooseBait(bait){
+			this.set("curBait", bait);
 		},
 	}
 });

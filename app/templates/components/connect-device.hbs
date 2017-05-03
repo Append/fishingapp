@@ -5,15 +5,19 @@
 {{#unless tiConnected}}
 	<button type="button" class="btn-info" {{action 'refreshDeviceList'}}>List Devices</button>
 	<ul id="deviceList" class="list-group">
+        {{#each nearbyDevices as |device|}}
+            <li class="list-group-item">
+                <b>{{device.name}}</b>&nbsp;|&nbsp;{{device.id}}
+                <button type="button" class="btn" {{action "connect" device.id}}>Connect</button>
+            </li>
+        {{/each}}
     </ul>
-    
-    <button type="button" class="btn-danger" {{action 'connect' '24:71:89:C0:B0:84'}}>Connect</button>
 {{else}}
-	<ul id="detailPage" class="list-group">
-    	<div id="barometerData">...</div>
-    </ul>
     {{!-- <button type="button" class="btn-warn" {{action 'check'}}>Device Status</button> --}}
     {{#if testing}}
+        <ul id="detailPage" class="list-group">
+            <div id="barometerData">...</div>
+        </ul>
         <h3>Barometric Pressure</h3>
         {{time-series-chart lineData=baroHistory}}
 

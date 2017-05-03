@@ -10,19 +10,12 @@ export default Ember.Component.extend({
 	press: 0,
 	baroHistory: [],
 	tempHistory: [],
+	nearbyDevices: [],
 
 
 	//this method handles refreshing and populating the list with new devices
-	onDiscoverDevice: function(device) {
-		var listItem = document.createElement('li'),
-		html = '<b>' + device.name + '</b>' +
-		'&nbsp;|&nbsp;' +
-		device.id + '<button type="button" class="btn" {{action "connect" ' + device.id + '}}>Connect</button>';
-
-		listItem.dataset.deviceId = device.id; 
-		listItem.innerHTML = html;
-		listItem.className = "list-group-item";
-		deviceList.appendChild(listItem);
+	onDiscoverDevice: function(component, device) {
+		component.get('nearbyDevices').pushObject({name: device.name, id: device.id});
 	},
 
 	// //error function not currently used
@@ -48,7 +41,7 @@ export default Ember.Component.extend({
                     "Pressure <br/>" + newThis.get('press')
                      + "hPa <br/>" ;
 
-        barometerData.innerHTML = message;
+        //barometerData.innerHTML = message;
         //update history, maintain 50 points max
 		var history=newThis.get('baroHistory');
 		if(history.length === 50){
@@ -113,7 +106,15 @@ export default Ember.Component.extend({
     	Ember.run.later(component, function(){component.get('recordLoop')(component)},5000);
     },
 
-    onButtonData: function(data) {
+    //https://www.w3schools.com/jsref/jsref_gethours.asp
+	addZero: function(i) {
+		if (i < 10) {
+			i = "0" + i;
+		}
+		return i;
+	},
+
+    onButtonData: function(component, data) {
 		// button bitmask
 		var LEFT_BUTTON = 1;  // 0001
 		var RIGHT_BUTTON = 2; // 0010
@@ -127,6 +128,20 @@ export default Ember.Component.extend({
 
         if (state & LEFT_BUTTON) {
         	//catch event, log an event for a catch
+        	localforage.length().then(function(numberOfKeys) {
+				// Outputs the length of the database.
+				//console.log(numberOfKeys);
+				var formattedNumber = ("0000" + numberOfKeys).slice(-5);
+				var t = new Date();
+				var h = component.get('addZero')(t.getHours());
+				var m = component.get('addZero')(t.getMinutes());
+				var s = component.get('addZero')(t.getSeconds());
+
+				localforage.setItem("catch" + formattedNumber, {"group": "default", "xValue": h +  + m +  + s, "yValue": 0}, function(){});
+			}).catch(function(err) {
+				// This code runs if there were any errors
+				console.log(err);
+			});
             message += 'Left button is pressed.<br/>';
         }
 
@@ -140,7 +155,7 @@ export default Ember.Component.extend({
 	onConnect: function(deviceId, newThis) {
 
 		// Subscribe to button service
-		ble.startNotification(deviceId, "FFE0", "FFE1", function(data){newThis.get('onButtonData')(data,newThis)}, function(reason){alert("butstart ERROR: " + reason);});
+		ble.startNotification(deviceId, "FFE0", "FFE1", function(data){newThis.get('onButtonData')(newThis, data)}, function(reason){alert("butstart ERROR: " + reason);});
 
 		//Subscribe to barometer service
 		ble.startNotification(deviceId, "F000AA40-0451-4000-B000-000000000000", "F000AA41-0451-4000-B000-000000000000", function(data){newThis.get('onBarometerData')(data,newThis)}, function(reason){alert("barostart ERROR: " + reason);});
@@ -182,11 +197,12 @@ export default Ember.Component.extend({
 
 	actions: {
 		//connect to device
-		connect: function(deviceId){
-			var Component = this;
-			Component.set('tiConnected', true);
+		connect: function(id){
+			var component = this;
+			component.set('tiConnected', true);
 			//alert(deviceId);
-			this.get('setup')(deviceId,Component);
+			component.set('deviceId', id);
+			this.get('setup')(id, component);
 		},
 
 		//disconnect from device
@@ -198,9 +214,9 @@ export default Ember.Component.extend({
 
 		//when first connected scan for devices with the CC2560 tag id, based on code from ble central
 		refreshDeviceList: function() {
-			var Component = this;
-			deviceList.innerHTML = ''; //dump old list
-			ble.scan(['AA80'], 5, function(device){Component.get('onDiscoverDevice')(device)}); // scan for CC2560 SensorTags
+			var component = this;
+			component.get('nearbyDevices').clear();
+			ble.scan(['AA80'], 5, function(device){component.get('onDiscoverDevice')(component, device)}); // scan for CC2560 SensorTags
 		},
 
 		//error checking function, used to see if device is connected
